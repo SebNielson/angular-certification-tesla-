@@ -5,5 +5,5 @@ export interface TeslaModel {
   code: string,
   description: string,
   colors: TeslaColorOption[],
-  configuration?: TeslaConfiguration,
+  teslaConfiguration?: TeslaConfiguration,
 }

@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, OnInit, signal, Signal, WritableSignal} from '@angular/core';
+import {Component, computed, effect, inject, OnInit, signal, Signal, untracked, WritableSignal} from '@angular/core';
 import {TeslaConfigurationService} from "../shared/services/tesla-configuration.service";
 import {TeslaModel} from "../shared/models/tesla-model.interface";
 import {ModelSelectionComponent} from "./model-selection/model-selection.component";
@@ -28,7 +28,7 @@ export class ConfigurationProcessComponent implements OnInit{
   currentStep: 1 | 2 | 3 = 1;
 
   imageLocation: Signal<string> = computed(() => {
-    const selectedModel = this.teslaModels()[this.selectedTesla()?.selectedModelIndex!];
+    const selectedModel = untracked(() => this.teslaModels())[this.selectedTesla()?.selectedModelIndex!];
     const folder = selectedModel.code.toLowerCase();
     const selectedColorIndex = this.selectedTesla()?.selectedColorIndex;
     const color = selectedColorIndex !== undefined ?
@@ -43,7 +43,7 @@ export class ConfigurationProcessComponent implements OnInit{
 
   switchToStep(step: 1 | 2 | 3) {
     const modelIndex = this.selectedTesla()?.selectedModelIndex!;
-    if (step === 2 && !this.teslaModels()[modelIndex].configuration) {
+    if (step === 2 && !this.teslaModels()[modelIndex].teslaConfiguration) {
       this.addTeslaConfiguration(modelIndex);
     }
     this.currentStep = step;
@@ -57,6 +57,14 @@ export class ConfigurationProcessComponent implements OnInit{
     this.selectedTesla.set({
       ...this.selectedTesla()!,
       selectedColorIndex: colorIndex
+    });
+  }
+
+  updateSelectedModelConfiguration(config: Partial<SelectedModel>) {
+    this.selectedTesla.set({...this.selectedTesla()!,
+      towHitch: config.towHitch || undefined,
+      yoke: config.yoke || undefined,
+      selectedConfigurationIndex: config.selectedConfigurationIndex || undefined
     });
   }
 

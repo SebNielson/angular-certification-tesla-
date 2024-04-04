@@ -30,6 +30,9 @@
 
   <app-options-selection
     *ngIf="currentStep === 2"
+    [teslaConfig]="teslaModels()[selectedTesla()?.selectedModelIndex ?? 0].teslaConfiguration"
+    [selectedModel]="selectedTesla()"
+    (updateSelectedModel)="updateSelectedModelConfiguration($event)"
   />
 
   <app-summary *ngIf="currentStep === 3" />

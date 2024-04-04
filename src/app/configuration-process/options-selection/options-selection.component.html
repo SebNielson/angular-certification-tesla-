@@ -1,1 +1,31 @@
 <h2>Step 2 : Select your config and options</h2>
+
+<div>
+  <label for="configSelect">Config :</label>
+  <select id="configSelect" [(ngModel)]="selectedConfigurationIndex" (change)="updateSelectedConfiguration()">
+    <option value="" disabled selected>Choose config</option>
+    <ng-container *ngFor="let config of teslaConfig?.configs; index as index">
+      <option [ngValue]="index">{{ config.description }}</option>
+    </ng-container>
+  </select>
+</div>
+
+<ng-container *ngIf="teslaConfig && selectedConfigurationIndex !== undefined">
+  Range : {{ teslaConfig.configs[selectedConfigurationIndex!].range }}
+  - Max speed : {{ teslaConfig.configs[selectedConfigurationIndex!].speed }}
+  - Cost : {{ teslaConfig.configs[selectedConfigurationIndex!].price }}
+</ng-container>
+
+<ng-container *ngIf="teslaConfig?.towHitch">
+  <div>
+    <label for="includeTow">Tow hitch?</label>
+    <input id="includeTow" type="checkbox" [value]="includeTow">
+  </div>
+</ng-container>
+
+<ng-container *ngIf="teslaConfig?.yoke">
+  <div>
+    <label for="includeYoke">Yoke steering wheel?</label>
+    <input id="includeYoke" type="checkbox" [value]="includeYoke">
+  </div>
+</ng-container>

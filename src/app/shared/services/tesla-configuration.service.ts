@@ -22,12 +22,12 @@ export class TeslaConfigurationService implements OnDestroy{
 
   addTeslaModelConfigurationsIfNotPresent(modelIndex: number) {
     const model = this.teslas()[modelIndex];
-    if (!model.configuration) {
+    if (!model.teslaConfiguration) {
       this.subs.push(this.teslaApiService.getConfigsForModel(model.code)
         .subscribe((config) => {
           this.teslas.update(teslaModels => {
 
-            teslaModels[modelIndex].configuration = config;
+            teslaModels[modelIndex].teslaConfiguration = config;
             return teslaModels;
 
             /*const updatedTeslasList = teslaModels.map( m => {

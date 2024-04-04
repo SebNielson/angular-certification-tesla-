@@ -3,7 +3,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   signal,
   WritableSignal,
@@ -31,8 +30,8 @@ export class ModelSelectionComponent implements AfterViewInit{
   @Output() chooseColor= new EventEmitter<number>();
 
   colorOptionList: WritableSignal<TeslaColorOption[]> = signal([]);
-  selectedModelIndex!: number;
-  selectedColorIndex!: number;
+  selectedModelIndex: number | undefined;
+  selectedColorIndex: number | undefined;
 
   ngAfterViewInit() {
     if (this.preSelectedModel) {
@@ -44,14 +43,20 @@ export class ModelSelectionComponent implements AfterViewInit{
 
   updateSelectedModel() {
     this.chooseModel.emit(this.selectedModelIndex);
-    this.setColorOptionList();
+    this.resetColorSelection();
   }
 
   updateSelectedColor() {
     this.chooseColor.emit(this.selectedColorIndex);
   }
 
+  private resetColorSelection() {
+    this.selectedColorIndex = undefined;
+    this.updateSelectedColor();
+    this.setColorOptionList();
+  }
+
   private setColorOptionList() {
-    this.colorOptionList.set(this.teslaModels[this.selectedModelIndex].colors);
+    this.colorOptionList.set(this.teslaModels[this.selectedModelIndex!].colors);
   }
 }

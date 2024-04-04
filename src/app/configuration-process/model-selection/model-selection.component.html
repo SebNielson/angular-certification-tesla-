@@ -2,7 +2,7 @@
 
 <label for="modelSelect">Model:</label>
 <select id="modelSelect" [(ngModel)]="selectedModelIndex" (change)="updateSelectedModel()">
-  <option value="" disabled selected>Choose</option>
+  <option value="" disabled selected>Choose model</option>
   <ng-container *ngFor="let teslaModel of teslaModels; index as index">
     <option [ngValue]="index">{{ teslaModel.description }}</option>
   </ng-container>
@@ -10,7 +10,7 @@
 
 <label for="colorSelect">Color :</label>
 <select id="colorSelect" [(ngModel)]="selectedColorIndex" (change)="updateSelectedColor()">
-  <option value="" disabled selected>Choose</option>
+  <option value="" disabled selected>Choose color</option>
   <ng-container *ngFor="let teslaColor of colorOptionList(); index as index">
     <option [ngValue]="index">{{ teslaColor.description }}</option>
   </ng-container>
