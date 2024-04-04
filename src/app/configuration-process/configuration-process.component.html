@@ -1,5 +1,41 @@
 <div class="top-bar">
-  <button class="steps">Step 1</button>
-  <button class="steps">Step 2</button>
-  <button class="steps">Step 3</button>
+  <button class="steps"
+          (click)="switchToStep(1)"
+          id="step1">
+    Step 1
+  </button>
+
+  <button class="steps"
+          (click)="switchToStep(2)"
+          [disabled]="!selectedTesla()?.color"
+          id="step2">
+    Step 2
+  </button>
+
+  <button class="steps"
+          (click)="switchToStep(3)"
+          [disabled]="!selectedTesla()?.config"
+          id="step3">
+    Step 3
+  </button>
+</div>
+
+<div>
+  <app-model-selection
+    *ngIf="currentStep === 1"
+    [teslaModels]="teslaModels()"
+    (chooseModel)="updateSelectedModel($event)"
+    (chooseColor)="updateSelectedColor($event)"/>
+
+  <app-options-selection
+    *ngIf="currentStep === 2"
+  />
+
+  <app-summary *ngIf="currentStep === 3" />
+</div>
+
+<div>
+  <ng-container *ngIf="selectedTesla()?.code">
+    <img [ngSrc]="imageLocation()"  width="600" height="500" alt="Tesla car display" />
+  </ng-container>
 </div>

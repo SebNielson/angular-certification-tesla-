@@ -1,4 +1,4 @@
-export interface ColorOption {
+export interface TeslaColorOption {
   code: string,
   description: string,
   price: number

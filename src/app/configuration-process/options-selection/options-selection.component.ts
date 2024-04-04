@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input, signal, Signal} from '@angular/core';
+import {TeslaConfiguration} from "../../shared/models/tesla-configuration.interface";
 
 @Component({
   selector: 'app-options-selection',

@@ -109,7 +109,6 @@ const handlers = [
           {code: "red", description: "Red Multi-Coat", price: 2000}
         ]
       }
-
     ]);
   }),
 ];

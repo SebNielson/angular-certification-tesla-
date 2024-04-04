@@ -1,7 +1,7 @@
-import {ConfigurationOptions} from "./configuration-options.interface";
+import {TeslaConfigurationOptions} from "./tesla-configuration-options.interface";
 
 export interface TeslaConfiguration {
-  configs: ConfigurationOptions[],
+  configs: TeslaConfigurationOptions[],
   towHitch: boolean,
   yoke: boolean,
 }
