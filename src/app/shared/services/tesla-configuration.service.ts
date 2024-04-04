@@ -20,19 +20,28 @@ export class TeslaConfigurationService implements OnDestroy{
     return this.teslas;
   }
 
-  addTeslaModelConfigurations(code: string) {
-    this.subs.push(this.teslaApiService.getConfigsForModel(code)
-      .subscribe((config) => {
-      this.teslas.update(teslaModels => {
-        const updatedTeslasList = teslaModels.map( model => {
-          if (model.code === code) {
-            model.configuration = config;
-          }
-          return model;
-        });
-        return teslaModels;
-      });
-    }));
+  addTeslaModelConfigurationsIfNotPresent(modelIndex: number) {
+    const model = this.teslas()[modelIndex];
+    if (!model.configuration) {
+      this.subs.push(this.teslaApiService.getConfigsForModel(model.code)
+        .subscribe((config) => {
+          this.teslas.update(teslaModels => {
+
+            teslaModels[modelIndex].configuration = config;
+            return teslaModels;
+
+            /*const updatedTeslasList = teslaModels.map( m => {
+              if (m.code === model.code) {
+                m.configuration = config;
+              }
+              return m;
+            });
+            return teslaModels;*/
+
+          });
+        }));
+    }
+
   }
 
   ngOnDestroy(): void {

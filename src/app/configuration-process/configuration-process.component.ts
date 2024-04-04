@@ -1,12 +1,11 @@
 import {Component, computed, effect, inject, OnInit, signal, Signal, WritableSignal} from '@angular/core';
 import {TeslaConfigurationService} from "../shared/services/tesla-configuration.service";
 import {TeslaModel} from "../shared/models/tesla-model.interface";
-import {TeslaColorOption} from "../shared/models/tesla-color-options.interface";
-import {TeslaConfigurationOptions} from "../shared/models/tesla-configuration-options.interface";
 import {ModelSelectionComponent} from "./model-selection/model-selection.component";
 import {NgIf, NgOptimizedImage} from "@angular/common";
 import {SummaryComponent} from "./summary/summary.component";
 import {OptionsSelectionComponent} from "./options-selection/options-selection.component";
+import {SelectedModel} from "../shared/models/selected-model";
 
 @Component({
   selector: 'app-configuration-process',
@@ -25,12 +24,16 @@ export class ConfigurationProcessComponent implements OnInit{
   teslaService = inject(TeslaConfigurationService);
 
   teslaModels: Signal<TeslaModel[]> = signal([]);
-  selectedTesla: WritableSignal<SelectedTesla | undefined> = signal(undefined);
+  selectedTesla: WritableSignal<SelectedModel | undefined> = signal(undefined);
   currentStep: 1 | 2 | 3 = 1;
 
   imageLocation: Signal<string> = computed(() => {
-    const folder = this.selectedTesla()?.code?.toLowerCase();
-    const color = this.selectedTesla()?.color?.code.toLowerCase() || 'white';
+    const selectedModel = this.teslaModels()[this.selectedTesla()?.selectedModelIndex!];
+    const folder = selectedModel.code.toLowerCase();
+    const selectedColorIndex = this.selectedTesla()?.selectedColorIndex;
+    const color = selectedColorIndex !== undefined ?
+      selectedModel.colors[selectedColorIndex].code.toLowerCase() :
+      'white';
     return (`./assets/images/${folder}/${color}.jpg`);
   });
 
@@ -39,31 +42,25 @@ export class ConfigurationProcessComponent implements OnInit{
   }
 
   switchToStep(step: 1 | 2 | 3) {
+    const modelIndex = this.selectedTesla()?.selectedModelIndex!;
+    if (step === 2 && !this.teslaModels()[modelIndex].configuration) {
+      this.addTeslaConfiguration(modelIndex);
+    }
     this.currentStep = step;
   }
 
-  updateSelectedModel(teslaModel: TeslaModel) {
+  updateSelectedModel(modelIndex: number) {
+    this.selectedTesla.set({selectedModelIndex: modelIndex});
+  }
+
+  updateSelectedColor(colorIndex: number) {
     this.selectedTesla.set({
-      code: teslaModel.code,
-      description: teslaModel.description,
-    })
+      ...this.selectedTesla()!,
+      selectedColorIndex: colorIndex
+    });
   }
 
-  updateSelectedColor(teslaColorOption: TeslaColorOption) {
-    this.selectedTesla.set({
-      ...this.selectedTesla(),
-      color: teslaColorOption
-    })
+  private addTeslaConfiguration(modelIndex: number) {
+    this.teslaService.addTeslaModelConfigurationsIfNotPresent(modelIndex);
   }
-
-  private addConfigurationIfNotPresent(model: TeslaModel) {
-    this.teslaService.addTeslaModelConfigurations(model.code);
-  }
-}
-
-interface SelectedTesla extends Partial<Pick<TeslaModel, 'code' | 'description'>> {
-  color?: TeslaColorOption,
-  config?: TeslaConfigurationOptions,
-  towHitch?: boolean,
-  yoke?: boolean,
 }

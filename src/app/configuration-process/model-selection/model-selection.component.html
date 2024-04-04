@@ -1,17 +1,17 @@
 <h2>Step 1 : Choose your model and color</h2>
 
 <label for="modelSelect">Model:</label>
-<select id="modelSelect" [(ngModel)]="selectedModel" (change)="updateSelectedModel()">
+<select id="modelSelect" [(ngModel)]="selectedModelIndex" (change)="updateSelectedModel()">
   <option value="" disabled selected>Choose</option>
-  <ng-container *ngFor="let teslaModel of teslaModels">
-    <option [ngValue]="teslaModel">{{ teslaModel.description }}</option>
+  <ng-container *ngFor="let teslaModel of teslaModels; index as index">
+    <option [ngValue]="index">{{ teslaModel.description }}</option>
   </ng-container>
 </select>
 
 <label for="colorSelect">Color :</label>
-<select id="colorSelect" [(ngModel)]="selectedColor" (change)="updateSelectedColor()">
+<select id="colorSelect" [(ngModel)]="selectedColorIndex" (change)="updateSelectedColor()">
   <option value="" disabled selected>Choose</option>
-  <ng-container *ngFor="let teslaColor of colorOptionList">
-    <option [ngValue]="teslaColor">{{ teslaColor.description }}</option>
+  <ng-container *ngFor="let teslaColor of colorOptionList(); index as index">
+    <option [ngValue]="index">{{ teslaColor.description }}</option>
   </ng-container>
 </select>

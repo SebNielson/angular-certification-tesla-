@@ -7,14 +7,14 @@
 
   <button class="steps"
           (click)="switchToStep(2)"
-          [disabled]="!selectedTesla()?.color"
+          [disabled]="selectedTesla()?.selectedColorIndex === undefined"
           id="step2">
     Step 2
   </button>
 
   <button class="steps"
           (click)="switchToStep(3)"
-          [disabled]="!selectedTesla()?.config"
+          [disabled]="selectedTesla()?.selectedConfigurationIndex === undefined"
           id="step3">
     Step 3
   </button>
@@ -24,6 +24,7 @@
   <app-model-selection
     *ngIf="currentStep === 1"
     [teslaModels]="teslaModels()"
+    [preSelectedModel]="selectedTesla()"
     (chooseModel)="updateSelectedModel($event)"
     (chooseColor)="updateSelectedColor($event)"/>
 
@@ -35,7 +36,7 @@
 </div>
 
 <div>
-  <ng-container *ngIf="selectedTesla()?.code">
-    <img [ngSrc]="imageLocation()"  width="600" height="500" alt="Tesla car display" />
+  <ng-container *ngIf="selectedTesla()">
+    <img [ngSrc]="imageLocation()"  width="720" height="480" alt="Tesla car display" />
   </ng-container>
 </div>

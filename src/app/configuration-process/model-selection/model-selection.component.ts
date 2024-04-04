@@ -1,13 +1,18 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
-  Output, signal, WritableSignal,
+  OnInit,
+  Output,
+  signal,
+  WritableSignal,
 } from '@angular/core';
 import {TeslaModel} from "../../shared/models/tesla-model.interface";
 import {NgForOf} from "@angular/common";
 import {TeslaColorOption} from "../../shared/models/tesla-color-options.interface";
 import {FormsModule} from "@angular/forms";
+import {SelectedModel} from "../../shared/models/selected-model";
 
 @Component({
   selector: 'app-model-selection',
@@ -19,21 +24,34 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './model-selection.component.html',
   styleUrl: './model-selection.component.scss'
 })
-export class ModelSelectionComponent{
+export class ModelSelectionComponent implements AfterViewInit{
   @Input() teslaModels: TeslaModel[] = [];
-  @Output() chooseModel = new EventEmitter<TeslaModel>();
-  @Output() chooseColor= new EventEmitter<TeslaColorOption>();
+  @Input() preSelectedModel?: SelectedModel;
+  @Output() chooseModel = new EventEmitter<number>();
+  @Output() chooseColor= new EventEmitter<number>();
 
-  colorOptionList:TeslaColorOption[] = [];
-  selectedModel!: TeslaModel;
-  selectedColor!: TeslaColorOption;
+  colorOptionList: WritableSignal<TeslaColorOption[]> = signal([]);
+  selectedModelIndex!: number;
+  selectedColorIndex!: number;
+
+  ngAfterViewInit() {
+    if (this.preSelectedModel) {
+      this.selectedModelIndex = this.preSelectedModel.selectedModelIndex;
+      this.setColorOptionList();
+      this.selectedColorIndex = this.preSelectedModel.selectedColorIndex!;
+    }
+  }
 
   updateSelectedModel() {
-    this.chooseModel.emit(this.selectedModel);
-    this.colorOptionList = this.selectedModel.colors;
+    this.chooseModel.emit(this.selectedModelIndex);
+    this.setColorOptionList();
   }
 
   updateSelectedColor() {
-    this.chooseColor.emit(this.selectedColor);
+    this.chooseColor.emit(this.selectedColorIndex);
+  }
+
+  private setColorOptionList() {
+    this.colorOptionList.set(this.teslaModels[this.selectedModelIndex].colors);
   }
 }
