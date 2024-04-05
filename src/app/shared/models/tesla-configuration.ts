@@ -1,4 +1,4 @@
-import {TeslaConfigurationOptions} from "./tesla-configuration-options.interface";
+import {TeslaConfigurationOptions} from "./tesla-configuration-options";
 
 export interface TeslaConfiguration {
   configs: TeslaConfigurationOptions[],

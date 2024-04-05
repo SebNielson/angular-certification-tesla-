@@ -19,13 +19,13 @@
 <ng-container *ngIf="teslaConfig?.towHitch">
   <div>
     <label for="includeTow">Tow hitch?</label>
-    <input id="includeTow" type="checkbox" [value]="includeTow">
+    <input id="includeTow" type="checkbox" [(ngModel)]="includeTow" (change)="updateSelectedConfiguration()">
   </div>
 </ng-container>
 
 <ng-container *ngIf="teslaConfig?.yoke">
   <div>
     <label for="includeYoke">Yoke steering wheel?</label>
-    <input id="includeYoke" type="checkbox" [value]="includeYoke">
+    <input id="includeYoke" type="checkbox" [(ngModel)]="includeYoke" (change)="updateSelectedConfiguration()">
   </div>
 </ng-container>

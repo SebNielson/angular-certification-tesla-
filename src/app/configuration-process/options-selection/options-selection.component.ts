@@ -1,8 +1,8 @@
 import {Component, computed, EventEmitter, Input, OnInit, Output, signal} from '@angular/core';
-import {TeslaConfiguration} from "../../shared/models/tesla-configuration.interface";
+import {TeslaConfiguration} from "../../shared/models/tesla-configuration";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {SelectedModel} from "../../shared/models/selected-model";
+import {SelectedTeslaModel} from "../../shared/models/selected-tesla-model";
 
 @Component({
   selector: 'app-options-selection',
@@ -18,17 +18,17 @@ import {SelectedModel} from "../../shared/models/selected-model";
 })
 export class OptionsSelectionComponent implements OnInit{
   @Input() teslaConfig?: TeslaConfiguration;
-  @Input() selectedModel?: SelectedModel;
-  @Output() updateSelectedModel = new EventEmitter<Partial<SelectedModel>>();
+  @Input() selectedTeslaIndexes?: SelectedTeslaModel;
+  @Output() updateSelectedModel = new EventEmitter<Partial<SelectedTeslaModel>>();
 
   selectedConfigurationIndex: number | undefined;
   includeTow= false;
   includeYoke = false;
 
   ngOnInit(): void {
-    this.includeYoke = !!this.selectedModel?.yoke;
-    this.includeTow = !!this.selectedModel?.towHitch;
-    this.selectedConfigurationIndex = this.selectedModel?.selectedConfigurationIndex;
+    this.includeYoke = !!this.selectedTeslaIndexes?.yoke;
+    this.includeTow = !!this.selectedTeslaIndexes?.towHitch;
+    this.selectedConfigurationIndex = this.selectedTeslaIndexes?.selectedConfigurationIndex;
   }
 
   updateSelectedConfiguration() {

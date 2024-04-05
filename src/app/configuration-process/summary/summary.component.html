@@ -1,1 +1,54 @@
-<p>summary works!</p>
+<h2>Step 3 : Summary</h2>
+
+<h3>Your {{ tesla.teslaModel.description }}</h3>
+
+<div class="container">
+  <div class="block">
+    <h4>
+      {{ tesla.configuration.description }}
+    </h4>
+    <div>
+      Range : {{ tesla.configuration.range }} -
+      Max speed : {{ tesla.configuration.speed }}
+    </div>
+  </div>
+  <div class="block">
+    {{ tesla.configuration.price | currency }}
+  </div>
+</div>
+
+<div class="container">
+  <h4 class="block">
+    {{ tesla.color.description }}
+  </h4>
+  <div class="block">
+    {{ tesla.color.price | currency }}
+  </div>
+</div>
+
+<ng-container *ngIf="tesla.tow" class="container">
+  <h4 class="block">
+    Tow Hitch Package
+  </h4>
+  <div class="block">
+    {{ towAndYokePrice | currency }}
+  </div>
+</ng-container>
+
+<ng-container *ngIf="tesla.yoke" class="container">
+  <h4 class="block">
+    Yoke Steering Wheel
+  </h4>
+  <div class="block">
+    {{ towAndYokePrice | currency }}
+  </div>
+</ng-container>
+
+<div class="container">
+  <h3 class="block">
+    TOTAL COST
+  </h3>
+  <div>
+    {{ totalCost | currency }}
+  </div>
+</div>

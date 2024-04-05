@@ -7,11 +7,11 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import {TeslaModel} from "../../shared/models/tesla-model.interface";
+import {TeslaModelOptions} from "../../shared/models/tesla-model-options";
 import {NgForOf} from "@angular/common";
-import {TeslaColorOption} from "../../shared/models/tesla-color-options.interface";
+import {TeslaColorOption} from "../../shared/models/tesla-color-options";
 import {FormsModule} from "@angular/forms";
-import {SelectedModel} from "../../shared/models/selected-model";
+import {SelectedTeslaModel} from "../../shared/models/selected-tesla-model";
 
 @Component({
   selector: 'app-model-selection',
@@ -24,8 +24,8 @@ import {SelectedModel} from "../../shared/models/selected-model";
   styleUrl: './model-selection.component.scss'
 })
 export class ModelSelectionComponent implements AfterViewInit{
-  @Input() teslaModels: TeslaModel[] = [];
-  @Input() preSelectedModel?: SelectedModel;
+  @Input() teslaModels: TeslaModelOptions[] = [];
+  @Input() preSelectedModel?: SelectedTeslaModel;
   @Output() chooseModel = new EventEmitter<number>();
   @Output() chooseColor= new EventEmitter<number>();
 

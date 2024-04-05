@@ -1,4 +1,4 @@
-export interface SelectedModel {
+export interface SelectedTeslaModel {
   selectedModelIndex: number,
   selectedColorIndex?: number,
   selectedConfigurationIndex?: number,

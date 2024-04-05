@@ -1,6 +1,6 @@
 import {inject, Injectable, OnDestroy, Signal, signal, WritableSignal} from '@angular/core';
 import {TeslaApiService} from "./tesla-api.service";
-import {TeslaModel} from "../models/tesla-model.interface";
+import {TeslaModelOptions} from "../models/tesla-model-options";
 import {Subscription} from "rxjs";
 
 @Injectable({
@@ -9,11 +9,11 @@ import {Subscription} from "rxjs";
 export class TeslaConfigurationService implements OnDestroy{
   private teslaApiService = inject(TeslaApiService);
 
-  private teslas: WritableSignal<TeslaModel[]> = signal([]);
+  private teslas: WritableSignal<TeslaModelOptions[]> = signal([]);
 
   private subs: Subscription[] = [];
 
-  getTeslaModels(): Signal<TeslaModel[]> {
+  getTeslaModels(): Signal<TeslaModelOptions[]> {
     this.subs.push(this.teslaApiService.getModels().subscribe((models) => {
       this.teslas.set(models);
     }));
@@ -26,18 +26,8 @@ export class TeslaConfigurationService implements OnDestroy{
       this.subs.push(this.teslaApiService.getConfigsForModel(model.code)
         .subscribe((config) => {
           this.teslas.update(teslaModels => {
-
             teslaModels[modelIndex].teslaConfiguration = config;
             return teslaModels;
-
-            /*const updatedTeslasList = teslaModels.map( m => {
-              if (m.code === model.code) {
-                m.configuration = config;
-              }
-              return m;
-            });
-            return teslaModels;*/
-
           });
         }));
     }

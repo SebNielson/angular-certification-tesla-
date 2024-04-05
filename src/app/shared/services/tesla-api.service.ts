@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {TeslaModel} from "../models/tesla-model.interface";
-import {TeslaConfiguration} from "../models/tesla-configuration.interface";
+import {TeslaModelOptions} from "../models/tesla-model-options";
+import {TeslaConfiguration} from "../models/tesla-configuration";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class TeslaApiService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getModels(): Observable<TeslaModel[]> {
-    return this.httpClient.get<TeslaModel[]>(`${this.baseUrl}models`);
+  getModels(): Observable<TeslaModelOptions[]> {
+    return this.httpClient.get<TeslaModelOptions[]>(`${this.baseUrl}models`);
   }
 
   getConfigsForModel(code: string): Observable<TeslaConfiguration> {
