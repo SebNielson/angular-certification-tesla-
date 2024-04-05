@@ -42,7 +42,7 @@ export class OptionsSelectionComponent implements OnInit{
 
   updateFinalTesla() {
     const config: SelectedTeslaConfiguration = {yoke: this.includeYoke, towHitch: this.includeTow};
-    if (this.selectedConfigurationIndex) {
+    if (this.selectedConfigurationIndex !== undefined) {
       config.config = this.teslaConfigs?.configs[this.selectedConfigurationIndex] || undefined;
     }
     this.updateSelectedModel.emit({...this.finalTesla, options: config});
