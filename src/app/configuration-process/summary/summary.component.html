@@ -1,0 +1,58 @@
+<h2>Step 3 : Summary</h2>
+
+<h3>Your {{ tesla.teslaModel?.description }}</h3>
+
+<div class="container">
+  <div class="block">
+    <h4>
+      {{ tesla.options?.config?.description }}
+    </h4>
+    <div>
+      Range : {{ tesla.options?.config?.range }} miles -
+      Max speed : {{ tesla.options?.config?.speed }}
+    </div>
+  </div>
+  <div class="block">
+    {{ tesla.options?.config?.price | currency }}
+  </div>
+</div>
+
+<div class="container">
+  <h4 class="block">
+    {{ tesla.color?.description }}
+  </h4>
+  <div class="block">
+    {{ tesla.color?.price | currency }}
+  </div>
+</div>
+
+<ng-container *ngIf="tesla.options?.towHitch">
+  <div class="container">
+    <h4 class="block">
+      Tow Hitch Package
+    </h4>
+    <div class="block">
+      {{ towAndYokePrice | currency }}
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="tesla.options?.yoke">
+  <div class="container">
+    <h4 class="block">
+      Yoke Steering Wheel
+    </h4>
+    <div class="block">
+      {{ towAndYokePrice | currency }}
+    </div>
+  </div>
+</ng-container>
+
+<div class="container">
+  <h3 class="block">
+    TOTAL COST
+  </h3>
+  <div class="block">
+    {{ totalCost | currency }}
+  </div>
+</div>
