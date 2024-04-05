@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FinalTeslaModel} from "../../shared/models/final-tesla-model";
+import {FinalTeslaSelection} from "../../shared/models/final-tesla-selection";
 import {CurrencyPipe, NgIf} from "@angular/common";
 
 @Component({
@@ -13,13 +13,13 @@ import {CurrencyPipe, NgIf} from "@angular/common";
   styleUrl: './summary.component.scss'
 })
 export class SummaryComponent{
-  @Input() tesla!: FinalTeslaModel;
+  @Input() tesla!: FinalTeslaSelection;
   readonly towAndYokePrice = 1000;
 
   get totalCost(): number {
-    return this.tesla.configuration.price
-      + this.tesla.color.price
-      + (this.tesla.tow ? this.towAndYokePrice : 0)
-      + (this.tesla.yoke ? this.towAndYokePrice : 0);
+    return this.tesla.options!.config!.price
+      + this.tesla.color!.price
+      + (this.tesla.options?.towHitch ? this.towAndYokePrice : 0)
+      + (this.tesla.options?.yoke ? this.towAndYokePrice : 0);
   }
 }

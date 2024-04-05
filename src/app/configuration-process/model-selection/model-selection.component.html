@@ -8,10 +8,13 @@
   </ng-container>
 </select>
 
-<label for="colorSelect">Color :</label>
-<select id="colorSelect" [(ngModel)]="selectedColorIndex" (change)="updateSelectedColor()">
-  <option value="" disabled selected>Choose color</option>
-  <ng-container *ngFor="let teslaColor of colorOptionList(); index as index">
-    <option [ngValue]="index">{{ teslaColor.description }}</option>
-  </ng-container>
-</select>
+<ng-container *ngIf="selectedModelIndex !== undefined">
+  <label for="colorSelect">Color :</label>
+  <select id="colorSelect" [(ngModel)]="selectedColorIndex" (change)="updateSelectedColorAndModel()">
+    <option value="" disabled selected>Choose color</option>
+    <ng-container *ngFor="let teslaColor of colorOptionList(); index as index">
+      <option [ngValue]="index">{{ teslaColor.description }}</option>
+    </ng-container>
+  </select>
+</ng-container>
+
