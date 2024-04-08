@@ -1,43 +1,25 @@
 <div class="top-bar">
   <button class="steps"
-          (click)="switchToStep(1)"
+          (click)="switchToStep('one')"
           id="step1">
     Step 1
   </button>
 
   <button class="steps"
-          (click)="switchToStep(2)"
-          [disabled]="finalTesla.color === undefined"
+          (click)="switchToStep('two')"
+          [disabled]="finalTesla().color === undefined"
           id="step2">
     Step 2
   </button>
 
   <button class="steps"
-          (click)="switchToStep(3)"
-          [disabled]="finalTesla.options === undefined"
+          (click)="switchToStep('three')"
+          [disabled]="finalTesla().options === undefined"
           id="step3">
     Step 3
   </button>
 </div>
 
-<div>
-  <app-model-selection
-    *ngIf="currentStep === 1"
-    [teslaModels]="teslaModelList()"
-    [preSelectedModel]="finalTesla"
-    (chooseTeslaModel)="updateFinalTeslaModelAndColor($event)"/>
-
-  <app-options-selection
-    *ngIf="currentStep === 2 && finalTesla.color"
-    [finalTesla]="finalTesla"
-    [teslaConfigs]="teslaModelList()[teslaModelListIndex!].teslaConfiguration"
-    (updateSelectedModel)="updateFinalTeslaConfiguration($event)"
-  />
-
-  <app-summary
-    *ngIf="currentStep === 3"
-    [tesla]="finalTesla"
-  />
-</div>
+<router-outlet />
 
 <app-picture-display [tesla]="finalTesla" />

@@ -2,8 +2,8 @@
 
 <label for="modelSelect">Model:</label>
 <select id="modelSelect" [(ngModel)]="selectedModelIndex" (change)="updateSelectedModel()">
-  <option value="" disabled selected>Choose model</option>
-  <ng-container *ngFor="let teslaModel of teslaModels; index as index">
+  <option *ngIf="!selectedModelIndex" value="" disabled selected>Choose model</option>
+  <ng-container *ngFor="let teslaModel of teslaModels(); index as index">
     <option [ngValue]="index">{{ teslaModel.description }}</option>
   </ng-container>
 </select>
@@ -17,4 +17,3 @@
     </ng-container>
   </select>
 </ng-container>
-

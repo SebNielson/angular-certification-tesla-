@@ -4,26 +4,26 @@
   <label for="configSelect">Config :</label>
   <select id="configSelect" [(ngModel)]="selectedConfigurationIndex" (change)="updateFinalTesla()">
     <option value="" disabled selected>Choose config</option>
-    <ng-container *ngFor="let config of teslaConfigs?.configs; index as index">
+    <ng-container *ngFor="let config of teslaConfig().configs; index as index">
       <option [ngValue]="index">{{ config.description }}</option>
     </ng-container>
   </select>
 </div>
 
-<ng-container *ngIf="teslaConfigs && selectedConfigurationIndex !== undefined">
-  Range : {{ teslaConfigs.configs[selectedConfigurationIndex!].range }}
-  - Max speed : {{ teslaConfigs.configs[selectedConfigurationIndex!].speed }}
-  - Cost : {{ teslaConfigs.configs[selectedConfigurationIndex!].price | currency }}
+<ng-container *ngIf="selectedConfigurationIndex !== undefined">
+  Range : {{ teslaConfig().configs[selectedConfigurationIndex!].range }}
+  - Max speed : {{ teslaConfig().configs[selectedConfigurationIndex!].speed }}
+  - Cost : {{ teslaConfig().configs[selectedConfigurationIndex!].price | currency }}
 </ng-container>
 
-<ng-container *ngIf="teslaConfigs?.towHitch">
+<ng-container *ngIf="teslaConfig().towHitch">
   <div>
     <label for="includeTow">Tow hitch?</label>
     <input id="includeTow" type="checkbox" [(ngModel)]="includeTow" (change)="updateFinalTesla()">
   </div>
 </ng-container>
 
-<ng-container *ngIf="teslaConfigs?.yoke">
+<ng-container *ngIf="teslaConfig().yoke">
   <div>
     <label for="includeYoke">Yoke steering wheel?</label>
     <input id="includeYoke" type="checkbox" [(ngModel)]="includeYoke" (change)="updateFinalTesla()">
