@@ -11,7 +11,7 @@
 </div>
 
 <ng-container *ngIf="selectedConfigurationIndex !== undefined">
-  Range : {{ teslaConfig().configs[selectedConfigurationIndex!].range }}
+  Range : {{ teslaConfig().configs[selectedConfigurationIndex!].range }} miles
   - Max speed : {{ teslaConfig().configs[selectedConfigurationIndex!].speed }}
   - Cost : {{ teslaConfig().configs[selectedConfigurationIndex!].price | currency }}
 </ng-container>
