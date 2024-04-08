@@ -22,7 +22,6 @@ export class ModelSelectionComponent implements OnInit{
 
   teslaModels: Signal<TeslaModelOptions[]> = signal([]);
   preSelectedModel: Signal<FinalTeslaSelection> = signal({});
-
   colorOptionList: WritableSignal<TeslaColorOption[]> = signal([]);
   selectedModelIndex: number | undefined;
   selectedColorIndex: number | undefined;
@@ -52,19 +51,18 @@ export class ModelSelectionComponent implements OnInit{
   }
 
   private setupPreselectedTesla() {
-    for (let i = 0; i < this.teslaModels.length; i++) {
-      if (this.teslaModels()[i].code === this.preSelectedModel().teslaModel?.code) {
-        this.selectedModelIndex = i;
-      }
+    const index = this.teslaModels().findIndex(tesla =>
+      tesla.code === this.preSelectedModel().teslaModel?.code);
+    if (index !== -1) {
+      this.selectedModelIndex = index;
     }
 
     this.setColorOptionList();
 
-    const colors = this.teslaModels()[this.selectedModelIndex!].colors;
-    for (let i = 0; i < colors.length ; i++) {
-      if (colors[i].code === this.preSelectedModel().color?.code) {
-        this.selectedColorIndex = i;
-      }
+    const indexColor = this.teslaModels()[this.selectedModelIndex!].colors.findIndex(color =>
+      color.code === this.preSelectedModel().color?.code);
+    if (indexColor !== -1) {
+      this.selectedColorIndex = indexColor;
     }
   }
 
