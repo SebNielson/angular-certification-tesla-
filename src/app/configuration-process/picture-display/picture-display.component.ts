@@ -1,4 +1,4 @@
-import {Component, computed, Input, OnChanges, Signal} from '@angular/core';
+import {Component, computed, Input, signal, Signal} from '@angular/core';
 import {NgIf, NgOptimizedImage} from "@angular/common";
 import {FinalTeslaSelection} from "../../shared/models/final-tesla-selection";
 
@@ -12,20 +12,16 @@ import {FinalTeslaSelection} from "../../shared/models/final-tesla-selection";
   templateUrl: './picture-display.component.html',
   styleUrl: './picture-display.component.scss'
 })
-export class PictureDisplayComponent implements OnChanges{
-  @Input() tesla!: FinalTeslaSelection;
+export class PictureDisplayComponent {
+  @Input() tesla: Signal<FinalTeslaSelection> = signal({});
 
-  imageLocation: string = '';
-
-  ngOnChanges() {
-    this.setImage();
-  }
-
-  setImage() {
-    if (this.tesla.teslaModel?.code) {
-      const folder = this.tesla.teslaModel!.code!.toLowerCase();
-      const color = this.tesla.color!.code.toLowerCase();
-      this.imageLocation = `./assets/images/${folder}/${color}.jpg`;
+  imageLocation = computed(() => {
+    if (this.tesla().teslaModel?.code) {
+      const folder = this.tesla().teslaModel!.code!.toLowerCase();
+      const color = this.tesla().color!.code.toLowerCase();
+      return `./assets/images/${folder}/${color}.jpg`;
+    } else {
+      return '';
     }
-  }
+  })
 }
